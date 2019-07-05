@@ -34,7 +34,7 @@ jobs:
           name: Deploy over SSH
           command: |
             ssh ubuntu@35.195.63.194 "docker container stop codechan_con && docker container prune -f && docker container run --name codechan_con -d -p 5000:5000 arcrl/codechan"
-            ssh ubuntu@34.77.102.142 "docker container stop codechan_con && docker container prune -f && docker container run --name codechan_con -d -p 5000:5000 arcrl/codechan"
+            ssh ubuntu@34.77.102.142 "docker container stop codechan_con || true && docker container prune -f && docker container run --name codechan_con -d -p 5000:5000 arcrl/codechan"
 workflows:
   version: 2
   myworkflow:
