@@ -1,6 +1,6 @@
 version: 2.0
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.6.4
     steps:
@@ -10,3 +10,28 @@ jobs:
           command: |
             sudo pip install -r requirements.txt
             python tests.py
+      - store_test_results:
+          path: build/test-results
+  dockerize:
+    machine: true
+    steps:
+      - checkout
+      # Login to docker
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      # build the application image
+      - run: docker build -t codechan .
+      - run: docker tag codechan $DOCKER_USER/codechan:$CIRCLE_SHA1 
+      - run: docker tag codechan $DOCKER_USER/codechan:latest
+
+      # deploy the image
+      - run: docker push $DOCKER_USER/codechan:$CIRCLE_SHA1 
+      - run: docker push $DOCKER_USER/codechan:latest
+workflows:
+  version: 2
+  myworkflow:
+    jobs:
+      - test
+      - dockerize:
+          requires:
+            - test
