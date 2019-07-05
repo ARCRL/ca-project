@@ -8,6 +8,7 @@ RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 COPY run.py /usr/src/app/
 COPY config.py /usr/src/app/
 COPY app/ /usr/src/app/app/
+COPY app.db /usr/src/app/
 
 EXPOSE 5000
 
