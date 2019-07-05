@@ -33,15 +33,16 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            ssh -i $codeacademy ubuntu@35.195.63.194 "docker container run --name codechan_con -d -p 5000:5000 arcrl/codechan"
+            echo $codeacademy > ~/.ssh/id_file
+            ssh -i ~/.ssh/id_file ubuntu@35.195.63.194 "docker container run --name codechan_con -d -p 5000:5000 arcrl/codechan"
 workflows:
   version: 2
   myworkflow:
     jobs:
       - test
-      - dockerize:
-          requires:
-            - test
+      #- dockerize:
+     #     requires:
+     #       - test
       - deploy:
           requires:
-            - dockerize
+            - test
