@@ -1,0 +1,9 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.4
+    steps:
+      - run:
+          name: Test
+          command: python tests.py
