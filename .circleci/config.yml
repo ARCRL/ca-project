@@ -42,6 +42,6 @@ workflows:
       - dockerize:
           requires:
             - test
-      - deply:
+      - deploy:
           requires:
             - dockerize
